@@ -1,9 +1,9 @@
 ﻿#include <iostream>
-#include "Map.h"
+#include "TreeMap.h"
 
 int main()
 {
-    Map<int, std::string>* map = new Map<int, std::string>();
+    TreeMap<int, std::string>* map = new TreeMap<int, std::string>();
     map->insert(13, "A");
     map->insert(8, "B");
     map->insert(17, "C");

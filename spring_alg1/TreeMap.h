@@ -7,7 +7,7 @@
 #define RED true
 
 template<class K, class V>
-class RedBlackTree
+class TreeMap
 {
 private:
 	struct Node {
@@ -27,6 +27,10 @@ private:
 		Node* y = x->right; // y is right subtree
 		Node* p = x->parent;
 		x->right = y->left; // node x becames parent for left subtree of y
+		if (y->left != nil) {
+			y->left->parent = x;
+		}
+		y->parent = x->parent;
 		if (x == root) { // node x is root
 			root = y;
 		}
@@ -44,6 +48,10 @@ private:
 		Node* x = y->left; // x is left subtree
 		Node* p = y->parent;
 		y->left = x->right; // node y becames parent for right subtree of x
+		if (x->left != nil) {
+			x->left->parent = y;
+		}
+		x->parent = y->parent;
 		if (y == root) { // node y is root
 			root = x;
 		}
@@ -171,18 +179,18 @@ public:
 			p = newNode->parent;
 			gp = p->parent;
 			if (p == gp->left) {
-				if (gp->right->color == RED) {
+				if (gp->right->color == RED) { // case I
 					gp->left->color = BLACK;
 					gp->right->color = BLACK;
 					gp->color = RED;
 					newNode = gp;
 				}
 				else {
-					if (p->color == RED && newNode == p->right) {
+					if (p->color == RED && newNode == p->right) { // case II
 						newNode = p;
 						left_rotate(newNode);
 					}
-					if (p->color == RED) {
+					if (p->color == RED) { // case III
 						p->color = BLACK;
 						gp->color = RED;
 						right_rotate(gp);
@@ -190,18 +198,18 @@ public:
 				}
 			}
 			else {
-				if (gp->left->color == RED) {
+				if (gp->left->color == RED) { // case I
 					gp->left->color = BLACK;
 					gp->right->color = BLACK;
 					gp->color = RED;
 					newNode = gp;
 				}
 				else {
-					if (p->color == RED && newNode == p->left) {
+					if (p->color == RED && newNode == p->left) { // case II
 						newNode = p;
 						right_rotate(newNode);
 					}
-					if (p->color == RED) {
+					if (p->color == RED) { // case III
 						p->color = BLACK;
 						gp->color = RED;
 						left_rotate(gp);
@@ -260,24 +268,24 @@ public:
 		while (x != root && x->color == BLACK) {
 			if (x->parent->left == x) { // x is left child
 				w = x->parent->right;
-				if (w->color == RED) {
+				if (w->color == RED) { // case I
 					w->color = BLACK;
 					x->parent->color = RED;
 					left_rotate(x->parent);
 					w = x->parent->right;
 				}
-				if (w->left->color == BLACK && w->right->color == BLACK) {
+				if (w->left->color == BLACK && w->right->color == BLACK) { // case II
 					w->color = RED;
 					x = x->parent;
 				}
 				else {
-					if (w->right->color == BLACK) {
+					if (w->right->color == BLACK) { // case III
 						w->left->color = BLACK;
 						w->color = RED;
 						right_rotate(w);
 						w = x->parent->right;
 					}
-					w->color = x->parent->color;
+					w->color = x->parent->color; // case IV
 					x->parent->color = BLACK;
 					w->right->color = BLACK;
 					left_rotate(x->parent);
@@ -286,24 +294,24 @@ public:
 			}
 			else { // x is right child
 				w = x->parent->left;
-				if (w->color == RED) {
+				if (w->color == RED) { // case I
 					w->color = BLACK;
 					x->parent->color = RED;
 					right_rotate(x->parent);
 					w = x->parent->left;
 				}
-				if (w->left->color == BLACK && w->right->color == BLACK) {
+				if (w->left->color == BLACK && w->right->color == BLACK) { // case II
 					w->color = RED;
 					x = x->parent;
 				}
 				else {
-					if (w->left->color == BLACK) {
+					if (w->left->color == BLACK) { // case III
 						w->right->color = BLACK;
 						w->color = RED;
 						left_rotate(w);
 						w = x->parent->left;
 					}
-					w->color = x->parent->color;
+					w->color = x->parent->color; // case IV
 					x->parent->color = BLACK;
 					w->left->color = BLACK;
 					right_rotate(x->parent);
@@ -334,5 +342,20 @@ public:
 		V* values = new V[size];
 		make_list_of_values(root, values);
 		return values;
+	}
+
+	friend std::ostream& operator<<(std::ostream& stream, TreeMap& map) {
+		K* keys = map.get_keys();
+		V* vals = map.get_values();
+		stream << "{\n";
+		for (int i = 0; i < map.get_size(); i++) {
+			stream << "\t" << keys[i] << " -> " << vals[i] << "\n";
+		}
+		stream << "}\n";
+		return stream;
+	}
+
+	void print() {
+		std::cout << *this;
 	}
 };

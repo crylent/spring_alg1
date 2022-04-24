@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "CppUnitTest.h"
-#include "../spring_alg1/Map.h"
+#include "../spring_alg1/TreeMap.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -12,7 +12,7 @@ namespace springtest1
 
 		TEST_METHOD(TestInsert)
 		{
-			Map<std::string, int>* map = new Map<std::string, int>();
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
 			map->insert("death", 0);
 			map->insert("pain", 1);
 			map->insert("solitude", 2);
@@ -25,7 +25,7 @@ namespace springtest1
 
 		TEST_METHOD(TestRemove)
 		{
-			Map<std::string, int>* map = new Map<std::string, int>();
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
 			map->insert("death", 0);
 			map->insert("pain", 1);
 			map->insert("solitude", 2);
@@ -44,17 +44,17 @@ namespace springtest1
 
 		TEST_METHOD(TestSize)
 		{
-			Map<std::string, int>* map = new Map<std::string, int>();
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
 			map->insert("death", 0);
 			map->insert("pain", 1);
 			map->insert("solitude", 2);
 			map->insert("suffering", 3);
-			Assert::AreEqual(size_t(4), map->size());
+			Assert::AreEqual(size_t(4), map->get_size());
 		}
 
 		TEST_METHOD(TestGetKeys)
 		{
-			Map<std::string, int>* map = new Map<std::string, int>();
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
 			map->insert("death", 0);
 			map->insert("pain", 1);
 			map->insert("solitude", 2);
@@ -75,7 +75,7 @@ namespace springtest1
 
 		TEST_METHOD(TestGetValues)
 		{
-			Map<std::string, int>* map = new Map<std::string, int>();
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
 			map->insert("death", 0);
 			map->insert("pain", 1);
 			map->insert("solitude", 2);

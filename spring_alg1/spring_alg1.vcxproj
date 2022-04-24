@@ -142,8 +142,7 @@
     <ClCompile Include="spring_alg1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="RedBlackTree.h" />
+    <ClInclude Include="TreeMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
