@@ -23,6 +23,18 @@ namespace springtest1
 			Assert::AreEqual(3, map->find("suffering"));
 		}
 
+		TEST_METHOD(TestWrongInsert)
+		{
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
+			map->insert("death", 0);
+			try {
+				map->insert("death", 0);
+			}
+			catch (std::exception error) {
+				Assert::AreEqual("Key already exists", error.what());
+			}
+		}
+
 		TEST_METHOD(TestRemove)
 		{
 			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
@@ -40,6 +52,21 @@ namespace springtest1
 			}
 			Assert::AreEqual(2, map->find("solitude"));
 			Assert::AreEqual(3, map->find("suffering"));
+		}
+
+		TEST_METHOD(TestWrongRemove)
+		{
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
+			map->insert("death", 0);
+			map->insert("pain", 1);
+			map->insert("solitude", 2);
+			map->insert("suffering", 3);
+			try {
+				map->remove("happiness");
+			}
+			catch (std::exception error) {
+				Assert::AreEqual("Key does not exists", error.what());
+			}
 		}
 
 		TEST_METHOD(TestSize)
@@ -92,6 +119,18 @@ namespace springtest1
 					}
 				}
 			}
+		}
+
+		TEST_METHOD(TestOutput)
+		{
+			TreeMap<std::string, int>* map = new TreeMap<std::string, int>();
+			map->insert("death", 0);
+			map->insert("pain", 1);
+			map->insert("solitude", 2);
+			map->insert("suffering", 3);
+			std::ostringstream stream;
+			stream << *map;
+			Assert::AreEqual("{\n\tdeath -> 0\n\tpain -> 1\n\tsolitude -> 2\n\tsuffering -> 3\n}\n", stream.str().c_str());
 		}
 	};
 }

@@ -147,6 +147,9 @@ public:
 		}
 		Node* node = root;
 		while (true) {
+			if (key == node->key) {
+				throw std::runtime_error("Key already exists");
+			}
 			if (key > node->key) {
 				if (node->right != nil) {
 					node = node->right;
