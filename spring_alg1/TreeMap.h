@@ -361,4 +361,8 @@ public:
 	void print() {
 		std::cout << *this;
 	}
+
+	~TreeMap() {
+		clear();
+	}
 };
