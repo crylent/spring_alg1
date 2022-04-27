@@ -48,8 +48,8 @@ private:
 		Node* x = y->left; // x is left subtree
 		Node* p = y->parent;
 		y->left = x->right; // node y becames parent for right subtree of x
-		if (x->left != nil) {
-			x->left->parent = y;
+		if (x->right != nil) {
+			x->right->parent = y;
 		}
 		x->parent = y->parent;
 		if (y == root) { // node y is root
